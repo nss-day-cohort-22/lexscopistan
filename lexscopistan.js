@@ -290,6 +290,11 @@ gemOrders.forEach(
     }
 )
 
+// Do we have a container (we haven't reached 30) and does it have something in it?
+if (currentGemContainer && currentGemContainer.orders.length) {
+    heapSkopeMap.set(currentGemContainer, {}) 
+}
+
 const heapOutputEl = document.getElementById("heapSkopeInfo")
 
 let contentsOutput = []

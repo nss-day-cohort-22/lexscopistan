@@ -253,7 +253,7 @@ const gemContainerGenerator = function* () {
 const containerMaker = gemContainerGenerator()
 
 // Create a Map so metadata about the containers can be stored
-const heapSkopeMap = new Map()
+const storageFacility = new Map()
 
 /*
     Place the gems in the storage containers, making sure that
@@ -273,7 +273,7 @@ gemOrders.forEach(
             if (capacity === 1) {
 
                 // Add container to Map
-                heapSkopeMap.set(currentGemContainer, {})
+                storageFacility.set(currentGemContainer, {})
 
                 /*
                     First metadata for each container - contents. Use a Set 
@@ -282,7 +282,7 @@ gemOrders.forEach(
                 */
                 const contents = new Set()
                 currentGemContainer.orders.forEach(o => contents.add(o.mineral))
-                heapSkopeMap.get(currentGemContainer).contents = contents
+                storageFacility.get(currentGemContainer).contents = contents
                 
                 currentGemContainer = containerMaker.next().value
             }
@@ -292,14 +292,14 @@ gemOrders.forEach(
 
 // Do we have a container (we haven't reached 30) and does it have something in it?
 if (currentGemContainer && currentGemContainer.orders.length) {
-    heapSkopeMap.set(currentGemContainer, {}) 
+    storageFacility.set(currentGemContainer, {}) 
 }
 
 const heapOutputEl = document.getElementById("heapSkopeInfo")
 
 let contentsOutput = []
-contentsOutput.push(`<p>The heap skope used ${heapSkopeMap.size} storage containers</p>`)
-const dev_null = [...heapSkopeMap.values()].forEach(
+contentsOutput.push(`<p>The heap skope used ${storageFacility.size} storage containers</p>`)
+const dev_null = [...storageFacility.values()].forEach(
     v => contentsOutput.push(`<div>Contents: ${[...v.contents].toString()}</div>`)
 )
 
